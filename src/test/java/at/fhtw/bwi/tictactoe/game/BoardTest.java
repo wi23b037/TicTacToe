@@ -65,5 +65,26 @@ public class BoardTest {
         board.place(0, 0, 'X');
         board.clear();
         assertFalse(board.cells[0][0] == 'X');
+        assertTrue(board.isCellEmpty(0, 0));
+    }
+
+    @Test
+    public void testPlaceOutOfBounds() {
+        Exception exception = assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            board.place(3, 3, 'X');
+        });
+        String expectedMessage = "Index 3 out of bounds for length 3";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void testIsCellEmptyOutOfBounds() {
+        Exception exception = assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            board.isCellEmpty(3, 3);
+        });
+        String expectedMessage = "Index 3 out of bounds for length 3";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }

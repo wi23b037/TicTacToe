@@ -26,6 +26,9 @@ public class TicTacToeTest {
     @Test
     public void testNoWinner() {
         game.start();
+        game.board.place(0, 0, 'X');
+        game.board.place(0, 1, 'O');
+        game.board.place(0, 2, 'X');
         assertFalse(game.hasWinner());
     }
 
@@ -92,5 +95,26 @@ public class TicTacToeTest {
         game.switchCurrentPlayer();
         game.switchCurrentPlayer();
         assertEquals(initialPlayer, game.currentPlayer);
+    }
+
+    @Test
+    public void testGameEndsWhenWinner() {
+        game.start();
+        game.board.place(0, 0, 'X');
+        game.board.place(0, 1, 'X');
+        game.board.place(0, 2, 'X');
+        assertTrue(game.hasWinner());
+        // Here we should check if the game loop stops, but since we don't have the game loop in the test,
+        // we assume the main method handles this. This test ensures hasWinner works correctly.
+    }
+
+    @Test
+    public void testPlayerMarkerStaysSameAfterWin() {
+        game.start();
+        game.board.place(0, 0, 'X');
+        game.board.place(0, 1, 'X');
+        game.board.place(0, 2, 'X');
+        assertTrue(game.hasWinner());
+        assertEquals('X', game.currentPlayer.getMarker());
     }
 }
