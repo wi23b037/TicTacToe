@@ -3,9 +3,9 @@ package at.fhtw.bwi.tictactoe.game;
 import java.util.Scanner;
 
 public class TicTacToe {
-    Player player1;
-    Player player2;
-    Player currentPlayer;
+    private Player player1;
+    private Player player2;
+    private Player currentPlayer;
     Board board;
 
     public TicTacToe() {
