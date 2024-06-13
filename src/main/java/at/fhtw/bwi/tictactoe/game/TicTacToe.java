@@ -3,8 +3,8 @@ package at.fhtw.bwi.tictactoe.game;
 import java.util.Scanner;
 
 public class TicTacToe {
-    private Player player1;
-    private Player player2;
+    Player player1;
+    Player player2;
     Player currentPlayer;
     Board board;
 
@@ -40,6 +40,10 @@ public class TicTacToe {
         return false;
     }
 
+    public boolean isDraw() {
+        return board.isFull() && !hasWinner();
+    }
+
     public void play() {
         Scanner scanner = new Scanner(System.in);
         start();
@@ -56,7 +60,7 @@ public class TicTacToe {
                 if (hasWinner()) {
                     System.out.println("Player " + currentPlayer.getMarker() + " wins!");
                     break;
-                } else if (board.isFull()) {
+                } else if (isDraw()) {
                     System.out.println("The game is a draw!");
                     break;
                 }

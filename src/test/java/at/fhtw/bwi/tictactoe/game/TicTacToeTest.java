@@ -15,7 +15,7 @@ public class TicTacToeTest {
     }
 
     @Test
-    public void testSwitchCurrentPlayer() {
+    public void testSwitchCurrentPlayerPositive() {
         game.start();
         Player firstPlayer = game.currentPlayer;
         game.switchCurrentPlayer();
@@ -23,7 +23,15 @@ public class TicTacToeTest {
     }
 
     @Test
-    public void testHasWinner() {
+    public void testSwitchCurrentPlayerNegative() {
+        game.start();
+        Player firstPlayer = game.currentPlayer;
+        game.switchCurrentPlayer();
+        assertEquals(firstPlayer == game.player1 ? game.player2 : game.player1, game.currentPlayer);
+    }
+
+    @Test
+    public void testHasWinnerPositive() {
         game.start();
         game.board.place(0, 0, 'X');
         game.board.place(0, 1, 'X');
@@ -32,13 +40,16 @@ public class TicTacToeTest {
     }
 
     @Test
-    public void testNoWinner() {
+    public void testHasWinnerNegative() {
         game.start();
+        game.board.place(0, 0, 'X');
+        game.board.place(0, 1, 'O');
+        game.board.place(0, 2, 'X');
         assertFalse(game.hasWinner());
     }
 
     @Test
-    public void testIsDraw() {
+    public void testIsDrawPositive() {
         game.start();
         game.board.place(0, 0, 'X');
         game.board.place(0, 1, 'O');
@@ -54,11 +65,34 @@ public class TicTacToeTest {
     }
 
     @Test
-    public void testPlay() {
-        // Testing play method requires manual interaction or mock input
-        // Here we ensure the game initializes correctly
+    public void testIsDrawNegative() {
+        game.start();
+        game.board.place(0, 0, 'X');
+        game.board.place(0, 1, 'O');
+        game.board.place(0, 2, 'X');
+        game.board.place(1, 0, 'X');
+        game.board.place(1, 1, 'O');
+        game.board.place(1, 2, 'X');
+        game.board.place(2, 0, 'O');
+        game.board.place(2, 1, 'X');
+        // Leave the last cell empty to make it not a draw
+        assertFalse(game.board.isFull());
+        assertFalse(game.isDraw());
+    }
+
+    @Test
+    public void testPlayPositive() {
+
         game.start();
         assertNotNull(game.currentPlayer);
         assertFalse(game.board.isFull());
+    }
+
+    @Test
+    public void testPlayNegative() {
+        game.start();
+        assertNotNull(game.currentPlayer);
+        assertFalse(game.hasWinner());
+        assertFalse(game.isDraw());
     }
 }
