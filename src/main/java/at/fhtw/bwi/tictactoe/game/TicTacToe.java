@@ -3,9 +3,9 @@ package at.fhtw.bwi.tictactoe.game;
 import java.util.Scanner;
 
 public class TicTacToe {
-    private Player player1;
+    Player player1;
     private Player player2;
-    private Player currentPlayer;
+    Player currentPlayer;
     Board board;
 
     public TicTacToe() {
@@ -46,29 +46,37 @@ public class TicTacToe {
 
     public void play() {
         Scanner scanner = new Scanner(System.in);
-        start();
-        board.print();
-        while (true) {
-            System.out.println("Current Player: " + currentPlayer.getMarker());
-            System.out.print("row (0-2): ");
-            int row = scanner.nextInt();
-            System.out.print("column (0-2): ");
-            int col = scanner.nextInt();
-            if (board.isCellEmpty(row, col)) {
-                board.place(row, col, currentPlayer.getMarker());
-                board.print();
-                if (hasWinner()) {
-                    System.out.println("Player " + currentPlayer.getMarker() + " wins!");
-                    break;
-                } else if (isDraw()) {
-                    System.out.println("The game is a draw!");
-                    break;
+        boolean playAgain;
+
+        do {
+            start();
+            board.print();
+            while (true) {
+                System.out.println("Current Player: " + currentPlayer.getMarker());
+                System.out.print("row (0-2): ");
+                int row = scanner.nextInt();
+                System.out.print("column (0-2): ");
+                int col = scanner.nextInt();
+                if (board.isCellEmpty(row, col)) {
+                    board.place(row, col, currentPlayer.getMarker());
+                    board.print();
+                    if (hasWinner()) {
+                        System.out.println("Player " + currentPlayer.getMarker() + " wins!");
+                        break;
+                    } else if (isDraw()) {
+                        System.out.println("The game is a draw!");
+                        break;
+                    }
+                    switchCurrentPlayer();
+                } else {
+                    System.out.println("Cell is not empty. Try again.");
                 }
-                switchCurrentPlayer();
-            } else {
-                System.out.println("Cell is not empty. Try again.");
             }
-        }
+            System.out.print("Do you want to play again? (yes/no): ");
+            String response = scanner.next();
+            playAgain = response.equalsIgnoreCase("yes");
+        } while (playAgain);
+
         scanner.close();
     }
 
